@@ -7,13 +7,21 @@ import styles from '../styles/Home.module.css';
 import { getVideos } from '../lib/videos';
 
 export const getServerSideProps = async () => {
-	const disneyVideos = await getVideos();
+	const disneyVideos = await getVideos('disney trailer');
+	const productivityVideos = await getVideos('productivity');
+	const travelVideos = await getVideos('travel');
+	// const popularVideos = await getVideos()
+
 	return {
-		props: { disneyVideos },
+		props: { disneyVideos, productivityVideos, travelVideos },
 	};
 };
 
-export default function Home({ disneyVideos }) {
+export default function Home({
+	disneyVideos,
+	productivityVideos,
+	travelVideos,
+}) {
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -30,6 +38,14 @@ export default function Home({ disneyVideos }) {
 			/>
 			<div className={styles.sectionWrapper}>
 				<SectionCards title='Disney' videos={disneyVideos} size='large' />
+				<SectionCards title='Travel' videos={travelVideos} size='small' />
+				<SectionCards
+					title='Productivity'
+					videos={productivityVideos}
+					size='medium'
+				/>
+
+				<SectionCards title='Popular' videos={disneyVideos} size='small' />
 			</div>
 		</div>
 	);
