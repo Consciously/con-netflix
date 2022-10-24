@@ -1,5 +1,6 @@
 import Head from 'next/head';
 import Banner from '../components/banner/Banner.component';
+import Card from '../components/card/Card.component';
 import Navbar from '../components/navbar/Navbar.component';
 import styles from '../styles/Home.module.css';
 
@@ -18,8 +19,9 @@ export default function Home() {
 				subTitle='a very cute dog'
 				imgUrl='/static/clifford.webp'
 			/>
-			{/* 
-      <Card /> */}
+			<Card imgUrl='/static/clifford.webp' size='large' />
+			<Card imgUrl='/static/clifford.webp' size='medium' />
+			<Card imgUrl='/static/clifford.webp' size='small' />
 		</div>
 	);
 }
