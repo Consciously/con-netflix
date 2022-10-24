@@ -6,6 +6,17 @@ import Navbar from '../components/navbar/Navbar.component';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+	const disneyVideos = [
+		{
+			imgUrl: '/static/clifford.webp',
+		},
+		{
+			imgUrl: '/static/clifford.webp',
+		},
+		{
+			imgUrl: '/static/clifford.webp',
+		},
+	];
 	return (
 		<div className={styles.container}>
 			<Head>
@@ -21,7 +32,8 @@ export default function Home() {
 				imgUrl='/static/clifford.webp'
 			/>
 			<div className={styles.sectionWrapper}>
-				<SectionCards title='Disney' />
+				<SectionCards title='Disney' videos={disneyVideos} size='large' />
+				<SectionCards title='Disney' videos={disneyVideos} size='medium' />
 			</div>
 		</div>
 	);
