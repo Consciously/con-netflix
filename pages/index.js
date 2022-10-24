@@ -6,9 +6,14 @@ import Navbar from '../components/navbar/Navbar.component';
 import styles from '../styles/Home.module.css';
 import { getVideos } from '../lib/videos';
 
-export default function Home() {
-	const disneyVideos = getVideos();
+export const getServerSideProps = async () => {
+	const disneyVideos = await getVideos();
+	return {
+		props: { disneyVideos },
+	};
+};
 
+export default function Home({ disneyVideos }) {
 	return (
 		<div className={styles.container}>
 			<Head>
