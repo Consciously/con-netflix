@@ -3,25 +3,39 @@ import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
+import { magic } from '../../lib/magic-client';
 import styles from './Login.module.css';
 
 const Login = () => {
 	const [email, setEmail] = useState('');
 	const [userMsg, setUserMsg] = useState('');
+	const [isLoading, setIsLoading] = useState(false);
 
 	const router = useRouter();
 
-	const handleLoginWithEmail = e => {
+	const handleLoginWithEmail = async e => {
 		e.preventDefault();
 
 		if (email) {
 			if (email === 'stefanihle@gmx.net') {
-				router.push('/');
+				try {
+					setIsLoading(true);
+					const didToken = await magic.auth.loginWithMagicLink({ email });
+					if (didToken) {
+						setIsLoading(false);
+						router.push('/');
+					}
+				} catch (error) {
+					setIsLoading(false);
+					throw new Error(`Something went wrong ${error.message}`);
+				}
 			} else {
 				setUserMsg('Something went wrong signing in');
+				setIsLoading(false);
 			}
 		} else {
 			setUserMsg('Enter a valid user address');
+			setIsLoading(false);
 		}
 	};
 
@@ -63,7 +77,7 @@ const Login = () => {
 					/>
 					<p className={styles.userMsg}>{userMsg}</p>
 					<button onClick={handleLoginWithEmail} className={styles.loginBtn}>
-						SignIn
+						{isLoading ? 'Loading...' : 'Sign In'}
 					</button>
 				</div>
 			</main>
