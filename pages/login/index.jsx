@@ -1,13 +1,34 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import Head from 'next/head';
 import Link from 'next/link';
 import Image from 'next/image';
 import styles from './Login.module.css';
 
 const Login = () => {
+	const [email, setEmail] = useState('');
+	const [userMsg, setUserMsg] = useState('');
+
+	const router = useRouter();
+
 	const handleLoginWithEmail = e => {
 		e.preventDefault();
-		console.log('Login');
+
+		if (email) {
+			if (email === 'stefanihle@gmx.net') {
+				router.push('/');
+			} else {
+				setUserMsg('Something went wrong signing in');
+			}
+		} else {
+			setUserMsg('Enter a valid user address');
+		}
+	};
+
+	const handleOnChangeEmail = e => {
+		const email = e.target.value;
+		setUserMsg('');
+		setEmail(email);
 	};
 
 	return (
@@ -33,13 +54,14 @@ const Login = () => {
 			</header>
 			<main className={styles.main}>
 				<div className={styles.mainWrapper}>
-					<h1 className={styles.siginHeader}>Sign In</h1>
+					<h1 className={styles.signinHeader}>Sign In</h1>
 					<input
 						type='text'
 						placeholder='Email address'
 						className={styles.emailInput}
+						onChange={handleOnChangeEmail}
 					/>
-					<p className={styles.userMsg}></p>
+					<p className={styles.userMsg}>{userMsg}</p>
 					<button onClick={handleLoginWithEmail} className={styles.loginBtn}>
 						SignIn
 					</button>

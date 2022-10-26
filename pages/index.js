@@ -5,6 +5,7 @@ import SectionCards from '../components/card/Section-card.component';
 import Navbar from '../components/navbar/Navbar.component';
 import styles from '../styles/Home.module.css';
 import { getPopularVideos, getVideos } from '../lib/videos';
+import { magic } from '../lib/magic-client';
 
 export const getServerSideProps = async () => {
 	const disneyVideos = await getVideos('disney trailer');
@@ -23,6 +24,7 @@ export default function Home({
 	travelVideos,
 	popularVideos,
 }) {
+	console.log({ magic });
 	return (
 		<div className={styles.container}>
 			<Head>
