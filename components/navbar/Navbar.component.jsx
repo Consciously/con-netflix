@@ -16,7 +16,6 @@ const Navbar = () => {
 
 		try {
 			await magic.user.logout();
-			setUsername('');
 			router.push('/login');
 		} catch (error) {
 			throw new Error(`Logout not successful ${error.message}`);
@@ -27,11 +26,16 @@ const Navbar = () => {
 		const getUser = async () => {
 			try {
 				const { email } = await magic.user.getMetadata();
-				if (email) {
-					setUsername(email);
+				const isLoggedIn = await magic.user.isLoggedIn();
+				if (isLoggedIn) {
+					if (email) {
+						setUsername(email);
+					}
+				} else {
+					router.push('/login');
 				}
 			} catch (error) {
-				throw new Error(`Cannot read user data ${error.message}`);
+				console.error(`Cannot read user data ${error.message}`);
 			}
 		};
 		getUser();
