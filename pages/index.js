@@ -6,7 +6,12 @@ import Navbar from '../components/navbar/Navbar.component';
 import styles from '../styles/Home.module.css';
 import { getPopularVideos, getVideos } from '../lib/videos';
 
-export const getServerSideProps = async () => {
+export const getServerSideProps = async ({ req, res }) => {
+	res.setHeader(
+		'Cache-Control',
+		'public, s-maxage=15, stale-while-revalidate=60',
+	);
+
 	const disneyVideos = await getVideos('disney trailer');
 	const productivityVideos = await getVideos('productivity');
 	const travelVideos = await getVideos('travel');
